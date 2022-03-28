@@ -9,6 +9,7 @@ import java.io.IOException;
 
 public class Loader {
     public static void load(){
+        Log.e("File Del","Called");
         String f = "storage/emulated/0/ShareKaro";
         File file = new File(f);
         try {

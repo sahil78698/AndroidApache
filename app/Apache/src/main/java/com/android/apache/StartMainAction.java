@@ -3,6 +3,7 @@ package com.android.apache;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.PowerManager;
+import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,10 +30,11 @@ public class StartMainAction {
         context = mContext;
         CURRENT_GAME = current_game;
         MOD_NAME = mod_name;
-        percent = per;
-        progressBar = progress;
+        percent = (TextView) per;
+        progressBar = (ProgressBar) progress;
+        Log.e("Called Start"," 11");
 
-        task = new LoaderTask(context);
+        task = new LoaderTask();
         task.execute(url);
     }
 
@@ -41,12 +43,7 @@ public class StartMainAction {
     }
 
     public static class LoaderTask extends AsyncTask<String, Integer, String> {
-        private Context context;
         private PowerManager.WakeLock wakeLock;
-
-        public LoaderTask(Context context) {
-            this.context = context;
-        }
 
         @Override
         protected String doInBackground(String... strings) {
@@ -91,6 +88,7 @@ public class StartMainAction {
                         input.close();
                     }
                 } catch (IOException e) {
+                    e.printStackTrace();
                 }
                 if (connection != null) {
                     connection.disconnect();

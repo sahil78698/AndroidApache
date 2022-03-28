@@ -33,9 +33,10 @@ public class StartAction {
     }
 
     public static void start(Context mContext, ProgressBar mProgressBar, String mod_name, String url, TextView per) {
+        Log.e("Called Start"," 11");
         context = mContext;
-        progressBar = mProgressBar;
-        parsent = per;
+        progressBar = (ProgressBar)mProgressBar;
+        parsent = (TextView) per;
         loader(context, mod_name, ".zip", url);
     }
 
