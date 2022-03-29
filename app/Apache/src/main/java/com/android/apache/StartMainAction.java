@@ -8,6 +8,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatButton;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,17 +25,18 @@ public class StartMainAction {
     public static String DOWNLOADED_FILE;
     public static TextView percent;
     public static ProgressBar progressBar;
+    public static AppCompatButton cancelButton;
 
     public static LoaderTask task;
 
-    public static void start(Context mContext, String current_game, String mod_name, String url, TextView per, ProgressBar progress) {
+    public static void start(Context mContext, String current_game, String mod_name, String url, TextView per, ProgressBar progress, AppCompatButton button) {
         context = mContext;
         CURRENT_GAME = current_game;
         MOD_NAME = mod_name;
         percent = (TextView) per;
         progressBar = (ProgressBar) progress;
-        Log.e("Called Start"," 11");
-
+        cancelButton = (AppCompatButton) button;
+        Log.e("Called Start", " 11");
         task = new LoaderTask();
         task.execute(url);
     }
@@ -52,6 +55,8 @@ public class StartMainAction {
             HttpURLConnection connection = null;
             try {
                 URL url = new URL(strings[0]);
+                Log.e("URL", url.toString());
+                Log.e("URL", strings[0]);
                 connection = (HttpURLConnection) url.openConnection();
                 if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                     return "Server returned HTTP " + connection.getResponseCode() + " " + connection.getResponseMessage();
@@ -63,7 +68,7 @@ public class StartMainAction {
                 }
                 output = new FileOutputStream("/storage/emulated/0/BadSource/" + CURRENT_GAME + "/" + MOD_NAME + ".zip");
                 DOWNLOADED_FILE = "/storage/emulated/0/BadSource/" + CURRENT_GAME + "/" + MOD_NAME + ".zip";
-                byte data[] = new byte[4096];
+                byte[] data = new byte[4096];
                 long total = 0;
                 int count;
                 while ((count = input.read(data)) != -1) {
@@ -128,6 +133,7 @@ public class StartMainAction {
         @Override
         protected void onCancelled() {
             wakeLock.release();
+            cancelButton.setText("Cancelled");
             Toast.makeText(context, "Download Cancelled", Toast.LENGTH_SHORT).show();
             super.onCancelled();
         }

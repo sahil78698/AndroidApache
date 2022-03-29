@@ -33,9 +33,9 @@ public class StartAction {
     }
 
     public static void start(Context mContext, ProgressBar mProgressBar, String mod_name, String url, TextView per) {
-        Log.e("Called Start"," 11");
+        Log.e("Called Start", " 11");
         context = mContext;
-        progressBar = (ProgressBar)mProgressBar;
+        progressBar = (ProgressBar) mProgressBar;
         parsent = (TextView) per;
         loader(context, mod_name, ".zip", url);
     }
@@ -47,6 +47,7 @@ public class StartAction {
     public static void loader(Context context, String fileName, String fileExtension, String url) {
         try {
             DownloadManager downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
+            Log.e("URL 11", url);
             Uri uri = Uri.parse(url);
             DownloadManager.Request request = new DownloadManager.Request(uri);
             request.setTitle("Downloading File");
