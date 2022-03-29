@@ -35,7 +35,6 @@ public class StartAction {
     }
 
     public static void start(Context mContext, ProgressBar mProgressBar, String mod_name, String url, TextView per, AppCompatButton button) {
-        Log.e("Called Start", " 11");
         context = mContext;
         progressBar = (ProgressBar) mProgressBar;
         parsent = (TextView) per;
@@ -51,7 +50,6 @@ public class StartAction {
     public static void loader(Context context, String fileName, String fileExtension, String url) {
         try {
             DownloadManager downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
-            Log.e("URL 11", url);
             Uri uri = Uri.parse(url);
             DownloadManager.Request request = new DownloadManager.Request(uri);
             request.setTitle("Downloading File");
@@ -96,7 +94,6 @@ public class StartAction {
                 }
             });
         } catch (Exception e) {
-            Toast.makeText(context, "Error: " + e, Toast.LENGTH_SHORT).show();
             Log.e("Download Error", e.toString());
             Log.e("Download Error", e.getMessage());
         }
@@ -114,7 +111,7 @@ public class StartAction {
                 }
                 int downloadProgress = msg.arg1;
                 progressBar.setProgress(downloadProgress);
-                parsent.setText("Downloading " + downloadProgress);
+                parsent.setText("Downloading: " + downloadProgress + "%");
                 if (downloadProgress == 100) {
                     cancelButton.setText("Done");
                     executor.shutdown();

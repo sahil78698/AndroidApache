@@ -26,7 +26,6 @@ public class StartMainAction {
     public static TextView percent;
     public static ProgressBar progressBar;
     public static AppCompatButton cancelButton;
-
     public static LoaderTask task;
 
     public static void start(Context mContext, String current_game, String mod_name, String url, TextView per, ProgressBar progress, AppCompatButton button) {
@@ -36,7 +35,6 @@ public class StartMainAction {
         percent = (TextView) per;
         progressBar = (ProgressBar) progress;
         cancelButton = (AppCompatButton) button;
-        Log.e("Called Start", " 11");
         task = new LoaderTask();
         task.execute(url);
     }
