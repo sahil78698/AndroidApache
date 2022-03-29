@@ -27,16 +27,20 @@ public class StartAction {
     public static ProgressBar progressBar;
     public static boolean canceled = false;
     public static TextView parsent;
+    public static AppCompatButton cancelButton;
+    public static String file;
 
     public static void cancel() {
         canceled = true;
     }
 
-    public static void start(Context mContext, ProgressBar mProgressBar, String mod_name, String url, TextView per) {
+    public static void start(Context mContext, ProgressBar mProgressBar, String mod_name, String url, TextView per, AppCompatButton button) {
         Log.e("Called Start", " 11");
         context = mContext;
         progressBar = (ProgressBar) mProgressBar;
         parsent = (TextView) per;
+        cancelButton = (AppCompatButton) button;
+        file = mod_name;
         loader(context, mod_name, ".zip", url);
     }
 
@@ -104,6 +108,7 @@ public class StartAction {
         public boolean handleMessage(@NonNull Message msg) {
             if (msg.what == UPDATE_DOWNLOAD_PROGRESS) {
                 if (canceled) {
+                    cancelButton.setText("Cancelled");
                     executor.shutdown();
                     mainHandler.removeCallbacksAndMessages(null);
                 }
@@ -111,10 +116,10 @@ public class StartAction {
                 progressBar.setProgress(downloadProgress);
                 parsent.setText("Downloading " + downloadProgress);
                 if (downloadProgress == 100) {
-
+                    cancelButton.setText("Done");
                     executor.shutdown();
                     mainHandler.removeCallbacksAndMessages(null);
-                    Toast.makeText(context, "File Downloaded at " + Environment.DIRECTORY_DOWNLOADS + "/downloadchecker.zip", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "File Downloaded at " + "/storage/emulated/0/Download/" + file + ".zip", Toast.LENGTH_SHORT).show();
                 }
             }
             return true;

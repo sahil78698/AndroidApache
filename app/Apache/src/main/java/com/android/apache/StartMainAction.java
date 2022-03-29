@@ -127,6 +127,7 @@ public class StartMainAction {
             } else {
                 Toast.makeText(context, "File Downloaded at " + DOWNLOADED_FILE, Toast.LENGTH_SHORT).show();
                 percent.setText("Done");
+                cancelButton.setText("Done");
             }
         }
 
